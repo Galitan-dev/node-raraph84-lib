@@ -7,7 +7,7 @@ const {
     time: {
         Duration,
     }
-} = require('./relief');
+} = require('./src');
 
 module.exports = {
     Endpoint,

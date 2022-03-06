@@ -19,5 +19,6 @@
   },
   "scripts": {
     "test": "node tests --server"
-  }
+  },
+  "typings": "index.d.ts"
 }
