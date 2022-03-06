@@ -1,17 +1,6 @@
-const {
-    http: {
-        Endpoint,
-        HttpServer,
-        Request,
-    },
-    time: {
-        Duration,
-    }
-} = require('./src');
-
 module.exports = {
-    Endpoint,
-    HttpServer,
-    Request,
-    Duration
+    Endpoint: require('./src/http/endpoint'),
+    HttpServer: require('./src/http/server'),
+    Request: require('./src/http/request'),
+    Duration: require('./src/time/duration')
 };
