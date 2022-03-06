@@ -17,10 +17,6 @@
     "events": "^3.3.0",
     "http": "^0.0.1-security"
   },
-  "imports": {
-    "#raraph84-lib": "./index.js",
-    "#raraph84-lib/flat": "./flat.js"
-  },
   "scripts": {
     "test": "node tests --server"
   }
