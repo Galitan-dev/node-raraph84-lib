@@ -1,4 +1,4 @@
-const { HttpServer } = require("../..").http;
+const { HttpServer } = require("../..");
 
 const server = new HttpServer();
 const PORT = process.env.PORT || 8080;
