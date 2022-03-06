@@ -21,3 +21,21 @@ export class Request {
     constructor(req: IncomingMessage, res: ServerResponse, data: string);
     end(code: number, data: object| string): void;
 }
+
+export interface Endpoint {
+    infos: {
+        path: string;
+        method: string;
+        requireAuth: boolean;
+    };
+    params: object;
+    run(): void;
+}
+
+export namespace Endpoint {
+    export function filterByPath(endpoints: Endpoint[], request: Request): Endpoint[];
+}
+
+export namespace Duration {
+    export function format(time: number): string;
+}

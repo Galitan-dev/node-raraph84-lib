@@ -5,7 +5,7 @@ const Request = require("./Request");
  * @param {Request} request 
  * @returns {Array<Endpoint>} 
  */
-module.exports.filterEndpointsByPath = (endpoints, request) => endpoints.filter((endpoint) => {
+module.exports.filterByPath = (endpoints, request) => endpoints.filter((endpoint) => {
 
     const currentParams = request.url.split("/");
     const requiredParams = endpoint.infos.path.split("/");
