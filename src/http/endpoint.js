@@ -1,9 +1,9 @@
 const Request = require("./Request");
 
 /**
- * @param {Array<Endpoint>} endpoints 
+ * @param {Endpoint[]} endpoints 
  * @param {Request} request 
- * @returns {Array<Endpoint>} 
+ * @returns {Endpoint[]}} 
  */
 module.exports.filterByPath = (endpoints, request) => endpoints.filter((endpoint) => {
 
@@ -26,17 +26,3 @@ module.exports.filterByPath = (endpoints, request) => endpoints.filter((endpoint
 
     return true;
 });
-
-/**
- * @typedef Endpoint 
- * @property {EndpointInfos} infos 
- * @property {Object} params 
- * @property {Function} run 
- */
-
-/**
- * @typedef EndpointInfos 
- * @property {string} path 
- * @property {string} method 
- * @property {boolean} requireAuth 
- */
