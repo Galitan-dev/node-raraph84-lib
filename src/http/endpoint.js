@@ -31,8 +31,8 @@ module.exports = class Endpoint extends EventEmitter{
      * @return {boolean}
      */
     run(req) {
-        req.appendParams()
-        this.emit(req.method)
+        req.appendParams(this.#params);
+        this.emit(req.method, req);
         return this.listenerCount(req.method) > 0;
     }
 
