@@ -19,5 +19,8 @@
   },
   "scripts": {
     "test": "node tests --server"
+  },
+  "devDependencies": {
+    "directory-tree": "^3.2.2"
   }
 }

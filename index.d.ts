@@ -19,7 +19,8 @@ export class Request {
     url: string;
     searchParams: URLSearchParams;
     constructor(req: IncomingMessage, res: ServerResponse, data: string);
-    end(code: number, data: object| string): void;
+    json(code: number, data: object | string): void;
+    end(code: number, data: string): void;
 }
 
 export interface Endpoint {

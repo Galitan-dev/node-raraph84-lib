@@ -25,7 +25,7 @@ module.exports = class Request {
      * @param {Number} code 
      * @param {Object|String} data 
      */
-    end(code, data) {
+    json(code, data) {
 
         if (typeof data === "object" || typeof data === "string")
             this.res.setHeader("Content-Type", "application/json");
@@ -35,5 +35,16 @@ module.exports = class Request {
         if (typeof data === "object") this.res.end(JSON.stringify(Object.assign({ code }, data)));
         else if (typeof data === "string") this.res.end(JSON.stringify({ code, message: data }));
         else this.res.end();
+    }
+
+    /**
+     * @param {Number} code 
+     * @param {string} data 
+     */
+    end(code, data) {
+
+        this.res.writeHead(code);
+
+        this.res.end(data);
     }
 }
