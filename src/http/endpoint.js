@@ -42,6 +42,7 @@ module.exports = class Endpoint extends EventEmitter{
      */
     get(listener) {
         this.on('GET', listener);
+        return this;
     }
 
     /**
