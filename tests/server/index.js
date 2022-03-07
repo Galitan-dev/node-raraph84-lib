@@ -10,7 +10,7 @@ server.static(PUBLIC_DIR);
 
 server.on("request", (req) => {
     try {
-        if (Endpoint.filterByPath(endpoints, req)[0]?.run?.(req)) return;
+        if (Endpoint.callByPath(endpoints, req)) return;
 
         req.end(404);
     } catch (err) {
