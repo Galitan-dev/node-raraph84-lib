@@ -80,8 +80,14 @@ module.exports = class HttpServer extends EventEmitter {
             if (file) return;
             if (
                 path !== searchPath &&
-                (item.name !== 'index.html' || !searchPath.endsWith('/')) &&
-                path.replace(/.[^.]*$/, '') !== searchPath
+                (
+                    !item.name.match('^index\.(html|css|js)$') ||
+                    path.split('/').slice(0, -1).join('/') + '/' !== searchPath
+                ) &&
+                (
+                    !item.name.match(`^${searchPath.split('/').at(-1)}\.(html|htm|css|js)$`) ||
+                    path.split('/').slice(0, -1).join('/') !== searchPath.split('/').slice(0, -1).join('/')
+                )
             ) return;
             file = readFileSync(item.path, 'utf8');
         });
