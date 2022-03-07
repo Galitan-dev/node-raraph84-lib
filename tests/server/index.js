@@ -9,14 +9,9 @@ const server = new HttpServer();
 server.static(PUBLIC_DIR);
 
 server.on("request", (req) => {
-    try {
-        if (Endpoint.callByPath(endpoints, req)) return;
+    if (Endpoint.callByPath(endpoints, req)) return;
 
-        req.end(404);
-    } catch (err) {
-        console.error(err);
-        req.end(500);
-    }
+    req.end(404);
 });
 
 server.on("listening", port => {
