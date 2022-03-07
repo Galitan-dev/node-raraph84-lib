@@ -1,13 +1,16 @@
-import { IncomingMessage, Server, ServerResponse } from "http";
+import { DirectoryTreeOptions } from "directory-tree";
+import { IncomingMessage, ServerResponse } from "http";
 
 export class HttpServer extends EventEmitter {
-    #server: Server;
 
+    static(publicDir: string, options?: DirectoryTreeOptions): void;
     listen(port: number): Promise<void>;
     
     on(event: "listening", listener: (port: number) => void): void;
     on(event: "rawRequest", listener: (req: IncomingMessage, res: ServerResponse, data: string) => void): void;
     on(event: "request", listener: (req: Request) => void): void;
+
+    static searchFile(publicDir: string, searchPath: string, options?: DirectoryTreeOptions): void;
 }
 
 export class Request {

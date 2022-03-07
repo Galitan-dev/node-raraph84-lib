@@ -1,11 +1,17 @@
 const EventEmitter = require("events");
 const Http = require("http");
 const Request = require("./Request");
+const dirTree = require("directory-tree");
+const { readFileSync } = require("fs");
 
 module.exports = class HttpServer extends EventEmitter {
 
     /** @type {Http.Server} */
     #server = null;
+
+    /** @type {{publicDir: string, options: import("directory-tree").DirectoryTreeOptions}} */
+    #staticConfig = null;
+
 
     constructor() {
 
@@ -17,11 +23,32 @@ module.exports = class HttpServer extends EventEmitter {
             req.on("data", (chunk) => data += chunk);
 
             req.on("end", () => {
+                if (this.#staticConfig) {
+                    const file = HttpServer.searchFile(
+                        this.#staticConfig.publicDir,
+                        req.url,
+                        this.#staticConfig.options
+                    );
+                    if (file) {
+                        res.writeHead(200);
+                        return res.end(file);
+                    }
+                }
 
                 this.emit("rawRequest", req, res, data);
                 this.emit("request", new Request(req, res, data));
             });
         });
+    }
+
+    /**
+     * @param {string} publicDir 
+     * @param {import("directory-tree").DirectoryTreeOptions} [options]
+     */
+    static(publicDir, options) {
+        this.#staticConfig = {
+            publicDir, options
+        }
     }
 
     /**
@@ -37,4 +64,30 @@ module.exports = class HttpServer extends EventEmitter {
         });
     }
 
+    
+    /**
+     * Loop a directory 
+     * @param {string} publicDir 
+     * @param {string} searchPath 
+     * @param {import("directory-tree").DirectoryTreeOptions} [options]
+     * @returns {string | undefined}
+     */
+    static searchFile(publicDir, searchPath, options) {
+        let file;
+        
+        dirTree(publicDir, options, (item, path, _) => {
+            path = path.substring(publicDir.length);
+            if (file) return;
+            if (
+                path !== searchPath &&
+                (item.name !== 'index.html' || !searchPath.endsWith('/')) &&
+                path.replace(/.[^.]*$/, '') !== searchPath
+            ) return;
+            file = readFileSync(item.path, 'utf8');
+        });
+        
+        return file;
+    }
+        
+        
 }
