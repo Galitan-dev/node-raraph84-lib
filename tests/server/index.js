@@ -1,5 +1,6 @@
-const { HttpServer } = require("../..");
+const { HttpServer, Endpoint } = require("../..");
 const PATH = require("path");
+const endpoints = require("./api");
 
 const PORT = process.env.PORT ?? 8080;
 const PUBLIC_DIR = process.env.PUBLIC_DIR ?? PATH.join(__dirname, "public")
@@ -9,6 +10,9 @@ server.static(PUBLIC_DIR);
 
 server.on("request", (req) => {
     try {
+
+        if (Endpoint.filterByPath(endpoints, req)[0]?.run?.(req)) return;
+
         req.end(404);
     } catch (err) {
         console.error(err);

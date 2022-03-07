@@ -33,11 +33,11 @@ export interface Endpoint {
         requireAuth: boolean;
     };
     params: object;
-    run(): void;
+    run(req: Request): void;
 }
 
 export namespace Endpoint {
-    export function filterByPath(endpoints: Endpoint[], request: Request): Endpoint[];
+    export function filterByPath<E extends Endpoint[]>(endpoints: E, request: Request): E;
 }
 
 export namespace Duration {
