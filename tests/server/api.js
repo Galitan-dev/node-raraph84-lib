@@ -1,28 +1,13 @@
-const { Endpoint } = require("../..");
+const { endpoint } = require("../..");
 const { textSync: bigText } = require("figlet");
 
 /** @type {Endpoint[]} */
 module.exports = [
-    {
-        infos: {
-            method: "GET",
-            path: "/hello",
-            requireAuth: false,
-        },
-        run(req) {
-            req.end(200, bigText("Hello World !"));
-            return true;
-        }
-    },
-    {
-        infos: {
-            method: "GET",
-            path: "/hello/:name",
-            requireAuth: false,
-        },
-        run(req) {
-            req.end(200, bigText(`Hello ${this.params.name ?? "Anonymous"} !`));
-            return true;
-        }
-    }
+
+    endpoint("/hello")
+        .get(req => req.end(200, bigText("Hello World !"))),
+    
+    endpoint("/hello/:name")
+        .get(req => req.end(200, bigText(`Hello ${req.params.name ?? "Anonymous"} !`))),
+    
 ];
