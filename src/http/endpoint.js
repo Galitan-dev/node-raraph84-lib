@@ -11,6 +11,8 @@ module.exports = class Endpoint extends EventEmitter{
      * @param {boolean} [requireAuth]
      */
     constructor(path, requireAuth = false) {
+        super();
+
         this.path = path;
         this.requireAuth = requireAuth;
     }
