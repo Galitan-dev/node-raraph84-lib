@@ -104,9 +104,9 @@ module.exports = class Endpoint extends EventEmitter{
      * @returns {boolean} 
      */
     static callByPath(endpoints, request) {
-        const endpoints = this.filterByPath(endpoints, request);
+        
         let called = false;
-        for (const endpoint of endpoints) {
+        for (const endpoint of this.filterByPath(endpoints, request)) {
             if (endpoint.run(request)) {
                 called = true;
                 break;
