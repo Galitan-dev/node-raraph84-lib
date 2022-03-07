@@ -75,7 +75,7 @@ module.exports = class Endpoint extends EventEmitter{
     /**
      * @param {Endpoint[]} endpoints 
      * @param {Request} request 
-     * @returns {Endpoint[]}} 
+     * @returns {Endpoint[]}
      */
     static filterByPath = (endpoints, request) => endpoints.filter((endpoint) => {
         const currentParams = request.url.split("/");
@@ -97,5 +97,23 @@ module.exports = class Endpoint extends EventEmitter{
 
         return true;
     });
+
+    /**
+     * @param {Endpoint[]} endpoints 
+     * @param {Request} request 
+     * @returns {boolean} 
+     */
+    static callByPath(endpoints, request) {
+        const endpoints = this.filterByPath(endpoints, request);
+        let called = false;
+        for (const endpoint of endpoints) {
+            if (endpoint.run(request)) {
+                called = true;
+                break;
+            }
+        }
+
+        return called;
+    } 
 
 };

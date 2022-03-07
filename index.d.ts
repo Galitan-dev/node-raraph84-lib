@@ -54,6 +54,7 @@ export class Endpoint extends EventEmitter {
     on(event: Method, listener: (req: Request) => void): void;
     
     static filterByPath(endpoints: Endpoint[], request: Request): Endpoint[];
+    static callByPath(endpoints: Endpoint[], request: Request): boolean;
     static endpoint(path: string, requireAuth: boolean): Endpoint;
 }
 
