@@ -14,6 +14,7 @@ module.exports = class Request {
         this.data = data;
         this.method = req.method.toUpperCase();
         this.ip = req.headers["x-forwarded-for"] || "127.0.0.1";
+        this.params = {};
 
         const urlSplitted = req.url.split("?");
         this.url = urlSplitted.shift();
@@ -22,8 +23,17 @@ module.exports = class Request {
     }
 
     /**
+     * @param {import("../..").StringMap} params 
+     * @returns {Request}
+     */
+    appendParams(params) {
+        this.params = params;
+        return this;
+    }
+
+    /**
      * @param {Number} code 
-     * @param {Object|String} data 
+     * @param {import("../..").StringMap|string} data 
      */
     json(code, data) {
 
@@ -38,13 +48,11 @@ module.exports = class Request {
     }
 
     /**
-     * @param {Number} code 
+     * @param {number} code 
      * @param {string} data 
      */
     end(code, data) {
-
         this.res.writeHead(code);
-
         this.res.end(data);
     }
 }
