@@ -35,6 +35,8 @@ export class Request {
     appendParams(params: StringMap): Request;
 }
 
+export function endpoint(path: string, require: boolean): Endpoint;
+
 export class Endpoint extends EventEmitter {
 
     constructor(path: string, requireAuth?: boolean);
