@@ -35,9 +35,12 @@ export class Request {
     appendParams(params: StringMap): Request;
 }
 
-export function endpoint(path: string, require: boolean): Endpoint;
+export function endpoint(path: string, requireAuth: boolean): Endpoint;
 
 export class Endpoint extends EventEmitter {
+
+    path: string;
+    requireAuth: boolean;
 
     constructor(path: string, requireAuth?: boolean);
 
@@ -51,7 +54,7 @@ export class Endpoint extends EventEmitter {
     on(event: Method, listener: (req: Request) => void): void;
     
     static filterByPath(endpoints: Endpoint[], request: Request): Endpoint[];
-    static endpoint(path: string, require: boolean): Endpoint;
+    static endpoint(path: string, requireAuth: boolean): Endpoint;
 }
 
 export namespace Duration {
